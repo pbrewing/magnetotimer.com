@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Online – Brewington Tech</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .order-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .qty-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .qty-row label {
+      font-size: 1rem;
+      color: #e5e7eb;
+    }
+
+    .qty-input {
+      width: 80px;
+      padding: 6px 10px;
+      font-size: 1rem;
+      background: #111827;
+      color: #e5e7eb;
+      border: 1px solid #4b5563;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .qty-input:focus {
+      outline: none;
+      border-color: #0ea5e9;
+    }
+
+    .location-select {
+      padding: 6px 10px;
+      font-size: 1rem;
+      background: #111827;
+      color: #e5e7eb;
+      border: 1px solid #4b5563;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .location-select:focus {
+      outline: none;
+      border-color: #0ea5e9;
+    }
+
+    .price-summary {
+      font-size: 1rem;
+      color: #9ca3af;
+      line-height: 1.9;
+    }
+
+    .price-summary .unit-price {
+      color: #0ea5e9;
+      font-weight: bold;
+    }
+
+    .price-summary .shipping-cost {
+      color: #0ea5e9;
+      font-weight: bold;
+    }
+
+    .price-summary .total-price {
+      color: #f9fafb;
+      font-size: 1.15rem;
+      font-weight: bold;
+    }
+
+    .price-summary .divider {
+      border: none;
+      border-top: 1px solid #374151;
+      margin: 4px 0;
+    }
+
+    .discount-badge {
+      display: inline-block;
+      background: #065f46;
+      color: #6ee7b7;
+      font-size: 0.8rem;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: 8px;
+    }
+
+    .add-btn {
+      background: #f97316;
+      color: #fff;
+      border: none;
+      padding: 10px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .add-btn:hover {
+      background: #ea580c;
+    }
+
+    .sandbox-banner {
+      background: #7c2d12;
+      color: #fed7aa;
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sandbox-banner" id="sandbox-banner" style="display:none;">
+    TEST MODE — PayPal Sandbox active. No real payments will be processed.
+  </div>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="header-banner">
+        <img src="../old stuff mysite3/Paul-000-Page-1.jpg" alt="Brewington Tech – Magneto Timer">
+      </a>
+      <nav>
+        <a href="pictures.html">Pictures</a>
+        <a href="order.html">Order Online</a>
+        <a href="index.html">Home</a>
+        <a href="../old stuff mysite3/magx7.pdf">Datasheet (PDF)</a>
+        <a href="pricing.html">Pricing &amp; Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Order Online</h1>
+
+    <div class="cart-actions">
+      <form id="view-cart-form" target="paypal" method="post">
+        <input type="hidden" name="cmd" value="_cart">
+        <input type="hidden" name="business" id="view-cart-business">
+        <input type="hidden" name="display" value="1">
+        <input type="image" src="https://www.paypal.com/en_US/i/btn/view_cart_new.gif" border="0" name="submit" alt="View PayPal Cart" width="86" height="21">
+      </form>
+    </div>
+
+    <div class="order-item">
+      <div class="order-item-label">
+        <strong>Magneto Synchronizer Kit</strong><br>
+        <span style="color:#9ca3af;">Must be soldered &nbsp;&middot;&nbsp; $31.00 each &nbsp;&middot;&nbsp; $28.00 each for 50+</span>
+      </div>
+
+      <div class="qty-row">
+        <label for="location">Ship to:</label>
+        <select id="location" class="location-select">
+          <option value="usa">USA</option>
+          <option value="canada">Canada</option>
+        </select>
+      </div>
+
+      <div class="qty-row">
+        <label for="qty">Quantity:</label>
+        <input type="number" id="qty" class="qty-input" min="1" value="1">
+      </div>
+
+      <div class="price-summary">
+        <div>Unit price: <span class="unit-price" id="unit-price">$31.00</span><span class="discount-badge" id="discount-badge" style="display:none;">50+ discount</span></div>
+        <div>Subtotal: <span id="subtotal">$31.00</span></div>
+        <div>Shipping: <span class="shipping-cost" id="shipping-display">$10.00</span></div>
+        <hr class="divider">
+        <div>Total: <span class="total-price" id="total-price">$41.00</span></div>
+      </div>
+
+      <form id="paypal-form" target="paypal" method="post">
+        <input type="hidden" name="cmd" value="_cart">
+        <input type="hidden" name="add" value="1">
+        <input type="hidden" name="business" id="paypal-business">
+        <input type="hidden" name="item_name" value="Magneto Synchronizer Kit">
+        <input type="hidden" name="currency_code" value="USD">
+        <input type="hidden" name="amount" id="paypal-amount" value="31.00">
+        <input type="hidden" name="quantity" id="paypal-qty" value="1">
+        <input type="hidden" name="shipping" id="paypal-shipping" value="10.00">
+        <input type="hidden" name="shipping2" value="0.00">
+        <button type="submit" class="add-btn">Add to Cart</button>
+      </form>
+    </div>
+
+    <h2>Shipping &amp; Handling</h2>
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Region</th>
+          <th>Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>USA</td>
+          <td>$10 — any size order</td>
+        </tr>
+        <tr>
+          <td>Canada</td>
+          <td>$35 — any size order</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script>
+    // ================================================================
+    // CONFIGURATION — change SANDBOX to false when ready to go live
+    // ================================================================
+    var SANDBOX = true;
+
+    var LIVE_EMAIL    = 'p@brewingtontech.com';
+    var SANDBOX_EMAIL = 'sb-69vas6994023@business.example.com';
+
+    var LIVE_URL    = 'https://www.paypal.com/cgi-bin/webscr';
+    var SANDBOX_URL = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+    // ================================================================
+
+    var SHIPPING = { usa: 10.00, canada: 35.00 };
+
+    var PRICE_REGULAR = 31.00;
+    var PRICE_BULK    = 28.00;
+    var BULK_MIN      = 50;
+
+    var email     = SANDBOX ? SANDBOX_EMAIL : LIVE_EMAIL;
+    var paypalURL = SANDBOX ? SANDBOX_URL   : LIVE_URL;
+
+    document.getElementById('paypal-form').action       = paypalURL;
+    document.getElementById('view-cart-form').action    = paypalURL;
+    document.getElementById('paypal-business').value    = email;
+    document.getElementById('view-cart-business').value = email;
+
+    if (SANDBOX) {
+      document.getElementById('sandbox-banner').style.display = 'block';
+    }
+
+    var qtyInput      = document.getElementById('qty');
+    var locationSel   = document.getElementById('location');
+    var unitDisplay   = document.getElementById('unit-price');
+    var subtotalEl    = document.getElementById('subtotal');
+    var shippingEl    = document.getElementById('shipping-display');
+    var totalDisplay  = document.getElementById('total-price');
+    var badge         = document.getElementById('discount-badge');
+    var paypalAmt     = document.getElementById('paypal-amount');
+    var paypalQty     = document.getElementById('paypal-qty');
+    var paypalShip    = document.getElementById('paypal-shipping');
+
+    function updatePricing() {
+      var qty      = Math.max(1, parseInt(qtyInput.value) || 1);
+      var price    = qty >= BULK_MIN ? PRICE_BULK : PRICE_REGULAR;
+      var shipping = SHIPPING[locationSel.value];
+      var subtotal = price * qty;
+      var total    = subtotal + shipping;
+
+      unitDisplay.textContent  = '$' + price.toFixed(2);
+      subtotalEl.textContent   = '$' + subtotal.toFixed(2);
+      shippingEl.textContent   = '$' + shipping.toFixed(2);
+      totalDisplay.textContent = '$' + total.toFixed(2);
+      badge.style.display      = qty >= BULK_MIN ? 'inline-block' : 'none';
+
+      paypalAmt.value  = price.toFixed(2);
+      paypalQty.value  = qty;
+      paypalShip.value = shipping.toFixed(2);
+    }
+
+    qtyInput.addEventListener('input', updatePricing);
+    locationSel.addEventListener('change', updatePricing);
+    updatePricing();
+  </script>
+</body>
+</html>
