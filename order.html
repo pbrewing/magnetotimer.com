@@ -143,21 +143,11 @@
   </header>
 
   <main>
-    <h1>Order Online</h1>
-
-    <div class="cart-actions">
-      <form id="view-cart-form" target="paypal" method="post">
-        <input type="hidden" name="cmd" value="_cart">
-        <input type="hidden" name="business" id="view-cart-business">
-        <input type="hidden" name="display" value="1">
-        <input type="image" src="https://www.paypal.com/en_US/i/btn/view_cart_new.gif" border="0" name="submit" alt="View PayPal Cart" width="86" height="21">
-      </form>
-    </div>
 
     <div class="order-item">
       <div class="order-item-label">
         <strong>Magneto Synchronizer Kit</strong><br>
-        <span style="color:#9ca3af;">Must be soldered &nbsp;&middot;&nbsp; $31.00 each &nbsp;&middot;&nbsp; $28.00 each for 50+</span>
+        <span style="color:#9ca3af;">Must be soldered &nbsp;&middot;&nbsp; $29.00 each &nbsp;&middot;&nbsp; $25.00 each for 50+</span>
       </div>
 
       <div class="qty-row">
@@ -231,17 +221,15 @@
 
     var SHIPPING = { usa: 10.00, canada: 35.00 };
 
-    var PRICE_REGULAR = 31.00;
-    var PRICE_BULK    = 28.00;
+    var PRICE_REGULAR = 29.00;
+    var PRICE_BULK    = 25.00;
     var BULK_MIN      = 50;
 
     var email     = SANDBOX ? SANDBOX_EMAIL : LIVE_EMAIL;
     var paypalURL = SANDBOX ? SANDBOX_URL   : LIVE_URL;
 
-    document.getElementById('paypal-form').action       = paypalURL;
-    document.getElementById('view-cart-form').action    = paypalURL;
-    document.getElementById('paypal-business').value    = email;
-    document.getElementById('view-cart-business').value = email;
+    document.getElementById('paypal-form').action    = paypalURL;
+    document.getElementById('paypal-business').value = email;
 
     if (SANDBOX) {
       document.getElementById('sandbox-banner').style.display = 'block';
